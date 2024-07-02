@@ -49,7 +49,7 @@ class GameEnd extends Phaser.Scene {
 
     this.load.image('gameover', 'assets/game_over_seal.png');
 
-    this.load.image('background', 'assets/background.jpg');
+    this.load.image('background', 'assets/seal_bg.png');
 
     this.load.spritesheet('jug_duck', 'assets/jug_duck.png', {
       frameWidth: 315,

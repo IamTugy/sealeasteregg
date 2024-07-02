@@ -47,15 +47,15 @@ class PlayScene extends Phaser.Scene {
     this.load.image('obsticle-6', 'assets/coffe_cup.png');
 
 
-    this.load.image('background', 'assets/background.jpg');
+    this.load.image('background', 'assets/seal_bg.png');
 
     this.load.spritesheet('jug_duck', 'assets/jug_duck.png', {
       frameWidth: 315,
       frameHeight: 280,
     });
-    this.load.spritesheet('jug_run', 'assets/jug_run.png', {
-      frameWidth: 290,
-      frameHeight: 352,
+    this.load.spritesheet('jug_run', 'assets/seal_character.png', {
+      frameWidth: 320,
+      frameHeight: 320,
     });
   }
 
@@ -178,8 +178,8 @@ class PlayScene extends Phaser.Scene {
   initAnims() {
     this.anims.create({
       key: 'dino-run',
-      frames: this.anims.generateFrameNumbers('jug_run', { start: 0, end: 6 }),
-      frameRate: 10,
+      frames: this.anims.generateFrameNumbers('jug_run', { start: 0, end: 1 }),
+      frameRate: 2,
       repeat: -1,
     });
 
@@ -304,8 +304,7 @@ class PlayScene extends Phaser.Scene {
       console.log('dino down animation');
       this.dino.play('dino-down-anim', true);
     } else {
-      // this.dino.play('dino-run', true);
-      this.dino.play('dino-run', true, 0);
+      this.dino.play('dino-run', true);
     }
   }
 
