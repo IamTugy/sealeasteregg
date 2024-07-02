@@ -22,7 +22,7 @@ class PlayScene extends Phaser.Scene {
     this.load.audio('hit', 'assets/hit.m4a');
     this.load.audio('reach', 'assets/reach.m4a');
 
-    this.load.image('ground', 'assets/ground.png');
+    // this.load.image('ground', 'assets/ground.png');
     // this.load.image('dino-idle', 'assets/dino-idle.png');
     // this.load.image('dino-hurt', 'assets/dino-hurt.png');
     // this.load.image('cloud', 'assets/cloud.png');
@@ -74,7 +74,7 @@ class PlayScene extends Phaser.Scene {
     this.reachSound = this.sound.add('reach', { volume: 0.2 });
 
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
-    this.ground = this.add.tileSprite(0, height, 88, 26, 'ground').setOrigin(0, 1);
+    this.ground = this.add.tileSprite(0, height, 88, 26).setOrigin(0, 1);
     this.dino = this.physics.add.sprite(0, height, 'jug_run', 0).setCollideWorldBounds(true).setGravityY(5000).setDepth(1).setOrigin(0, 1);
     this.dino.body.setSize(this.dino.width - 100, this.dino.height);
     // console.log(this.dino.body); // 66, 123
@@ -241,25 +241,26 @@ class PlayScene extends Phaser.Scene {
       this.dino.setVelocityY(-2000);
       // this.dino.setTexture('jug_run', 0);
     });
+    this.down_jump = false
+    // TODO: add sprite and support 
+    //   this.input.keyboard.on('keydown_DOWN', () => {
+    //     if (!this.dino.body.onFloor() || !this.isGameRunning) {
+    //       return;
+    //     }
+    //     // this.dino.play('dino-down-anim', true);
+    //     this.down_jump = true
+    //     // this.dino.body.height = 90;
+    //     // this.dino.body.offset.y = 24;
+    //   });
 
-    this.input.keyboard.on('keydown_DOWN', () => {
-      if (!this.dino.body.onFloor() || !this.isGameRunning) {
-        return;
-      }
-      // this.dino.play('dino-down-anim', true);
-      this.down_jump = true
-      // this.dino.body.height = 90;
-      // this.dino.body.offset.y = 24;
-    });
-
-    this.input.keyboard.on('keyup_DOWN', () => {
-      if (!this.isGameRunning) {
-        return;
-      }
-      this.down_jump = false
-      // this.dino.body.setSize(this.dino.width - 100, 124);
-      // this.dino.body.offset.y = 0;
-    });
+    //   this.input.keyboard.on('keyup_DOWN', () => {
+    //     if (!this.isGameRunning) {
+    //       return;
+    //     }
+    //     this.down_jump = false
+    //     // this.dino.body.setSize(this.dino.width - 100, 124);
+    //     // this.dino.body.offset.y = 0;
+    //   });
   }
 
   placeObsticle() {
