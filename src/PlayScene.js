@@ -101,8 +101,6 @@ class PlayScene extends Phaser.Scene {
     this.handleScore();
   }
 
-  // TODO: show score alongside high score
-  // TODO: fix play animation
   initColliders() {
     this.physics.add.collider(
       this.dino,
