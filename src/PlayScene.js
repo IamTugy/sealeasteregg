@@ -27,22 +27,12 @@ class PlayScene extends Phaser.Scene {
     // this.load.image('dino-hurt', 'assets/dino-hurt.png');
     // this.load.image('cloud', 'assets/cloud.png');
 
-    this.load.spritesheet('star', 'assets/stars.png', {
-      frameWidth: 9,
-      frameHeight: 9,
-    });
-
-    this.load.spritesheet('moon', 'assets/moon.png', {
-      frameWidth: 20,
-      frameHeight: 40,
-    });
-
 
     // new
-    this.load.image('obsticle-1', 'assets/coffe_cup.png');
+    this.load.image('obsticle-1', 'assets/CVE-2018-12035.png');
     this.load.image('obsticle-2', 'assets/spoon.png');
     this.load.image('obsticle-3', 'assets/coffe_cup.png');
-    this.load.image('obsticle-4', 'assets/spoon.png');
+    this.load.image('obsticle-4', 'assets/CVE-2019-9950.png');
     this.load.image('obsticle-5', 'assets/coffe_cup.png');
     this.load.image('obsticle-6', 'assets/coffe_cup.png');
 
@@ -75,15 +65,15 @@ class PlayScene extends Phaser.Scene {
 
     this.startTrigger = this.physics.add.sprite(0, 10).setOrigin(0, 1).setImmovable();
     this.ground = this.add.tileSprite(0, height, 88, 26).setOrigin(0, 1);
-    this.dino = this.physics.add.sprite(0, height, 'jug_run', 0).setCollideWorldBounds(true).setGravityY(5000).setDepth(1).setOrigin(0, 1);
+    this.dino = this.physics.add.sprite(0, height, 'jug_run', 0).setCollideWorldBounds(true).setGravityY(3000).setDepth(1).setOrigin(0, 1);
     this.dino.body.setSize(this.dino.width - 100, this.dino.height);
     // console.log(this.dino.body); // 66, 123
     // setBodySize(44, 92)
-    this.dino.setScale(0.35);
+    this.dino.setScale(0.5);
 
     const screenTopLeftX = this.cameras.main.worldView.x + this.cameras.main.width - 90;
     const screenTopLeftY = 35;
-    this.scoreText = this.add.text(screenTopLeftX, screenTopLeftY, 'Score: ' + this.score, { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(0.5);
+    this.scoreText = this.add.text(screenTopLeftX, screenTopLeftY, this.score, { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(0.5);
 
     backgroundTile = this.add.tileSprite(640, 300, 1280, 600, 'background').setScale(1).setDepth(-1);
     // background.setScrollFactor(20, 1);
@@ -137,42 +127,36 @@ class PlayScene extends Phaser.Scene {
   }
 
   initStartTrigger() {
-    const { width, height } = this.game.config;
-    this.physics.add.overlap(
-      this.startTrigger,
-      this.dino,
-      () => {
-        if (this.startTrigger.y === 10) {
-          this.startTrigger.body.reset(0, height);
-          return;
-        }
+    // const { width, height } = this.game.config;
+    // this.physics.add.overlap(
+    //   this.startTrigger,
+    //   this.dino,
+    //   () => {
+    //     if (this.startTrigger.y === 10) {
+    //       this.startTrigger.body.reset(0, height);
+    //       return;
+    //     }
 
-        this.startTrigger.disableBody(true, true);
+    //     this.startTrigger.disableBody(true, true);
 
-        const startEvent = this.time.addEvent({
-          delay: 1000 / 60,
-          loop: true,
-          callbackScope: this,
-          callback: () => {
-            this.dino.setVelocityX(80);
-            this.dino.play('dino-run', true);
+    //     const startEvent = this.time.addEvent({
+    //       delay: 1000 / 60,
+    //       loop: true,
+    //       callbackScope: this,
+    //       callback: () => {
+    //         this.dino.setVelocityX(80);
+    //         this.dino.play('dino-run', true);
 
-            if (this.ground.width < width) {
-              this.ground.width += 17 * 2;
-            }
+    //         this.isGameRunning = true;
+    //         this.dino.setVelocityX(0);
+    //         startEvent.remove();
+    //       },
+    //     });
+    //   },
+    //   null,
+    //   this
+    // );
 
-            if (this.ground.width >= 1000) {
-              this.ground.width = width;
-              this.isGameRunning = true;
-              this.dino.setVelocityX(0);
-              startEvent.remove();
-            }
-          },
-        });
-      },
-      null,
-      this
-    );
   }
 
   initAnims() {
@@ -230,6 +214,10 @@ class PlayScene extends Phaser.Scene {
   handleInputs() {
 
     this.input.keyboard.on('keydown_SPACE', () => {
+      if (!this.isGameRunning) {
+        this.isGameRunning = true
+      }
+
       if (!this.dino.body.onFloor() || this.dino.body.velocity.x > 0) {
         return;
       }
@@ -238,7 +226,7 @@ class PlayScene extends Phaser.Scene {
       this.isJump = true;
       // this.dino.body.setSize(this.dino.width - 100, this.dino.height);
       this.dino.body.offset.y = 0;
-      this.dino.setVelocityY(-2000);
+      this.dino.setVelocityY(-1200);
       // this.dino.setTexture('jug_run', 0);
     });
     this.down_jump = false
@@ -273,14 +261,17 @@ class PlayScene extends Phaser.Scene {
       const enemyHeight = [80, 100];
       obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - enemyHeight[Math.floor(Math.random() * 2)], 'obsticle-4').setOrigin(0, 1);
       obsticle.body.height = obsticle.body.height / 1.5;
-      obsticle.setScale(0.1);
+      obsticle.setScale(0.2);
     } else {
-      obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 10, 'obsticle-1').setOrigin(0, 1);
+      obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 10, 'obsticle-1').setOrigin(0, 1).setScale(4);
       // obsticle.body.offset.y = +10;
-      obsticle.setScale(0.1);
+      obsticle.setScale(0.2);
       // obsticle.setImmovable();
     }
-
+    if (this.score > 333) {
+      // haha
+      obsticle.setScale(1);
+    }
     obsticle.setImmovable();
   }
 
