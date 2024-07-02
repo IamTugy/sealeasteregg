@@ -25,8 +25,6 @@ class PlayScene extends Phaser.Scene {
     this.load.image('ground', 'assets/ground.png');
     // this.load.image('dino-idle', 'assets/dino-idle.png');
     // this.load.image('dino-hurt', 'assets/dino-hurt.png');
-    this.load.image('restart', 'assets/restart.png');
-    this.load.image('game-over', 'assets/game-over.png');
     // this.load.image('cloud', 'assets/cloud.png');
 
     this.load.spritesheet('star', 'assets/stars.png', {
@@ -48,7 +46,6 @@ class PlayScene extends Phaser.Scene {
     this.load.image('obsticle-5', 'assets/coffe_cup.png');
     this.load.image('obsticle-6', 'assets/coffe_cup.png');
 
-    this.load.image('gameover', 'assets/gameover.png');
 
     this.load.image('background', 'assets/background.jpg');
 
@@ -94,10 +91,6 @@ class PlayScene extends Phaser.Scene {
     this.environment.addMultiple([this.add.image(width / 2, 170, 'cloud'), this.add.image(width - 80, 80, 'cloud'), this.add.image(width / 1.3, 100, 'cloud')]);
     this.environment.setAlpha(0);
 
-    this.gameOverScreen = this.add.container(width / 2, height / 2 - 50).setAlpha(0);
-    this.gameOverText = this.add.image(0, 0, 'gameover').setScale(0.25).setOrigin(0.5);
-    this.restart = this.add.image(0, 80, 'restart').setInteractive();
-    this.gameOverScreen.add([this.gameOverText, this.restart]);
 
     this.obsticles = this.physics.add.group();
 
@@ -237,10 +230,6 @@ class PlayScene extends Phaser.Scene {
   }
 
   handleInputs() {
-    this.restart.on('pointerdown', () => {
-      this.scene.restart();
-      return
-    });
 
     this.input.keyboard.on('keydown_SPACE', () => {
       if (!this.dino.body.onFloor() || this.dino.body.velocity.x > 0) {

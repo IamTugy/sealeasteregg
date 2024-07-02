@@ -26,7 +26,6 @@ class GameEnd extends Phaser.Scene {
     // this.load.image('dino-idle', 'assets/dino-idle.png');
     // this.load.image('dino-hurt', 'assets/dino-hurt.png');
     this.load.image('restart', 'assets/restart.png');
-    this.load.image('game-over', 'assets/game-over.png');
     // this.load.image('cloud', 'assets/cloud.png');
 
     this.load.spritesheet('star', 'assets/stars.png', {
@@ -48,7 +47,7 @@ class GameEnd extends Phaser.Scene {
     this.load.image('obsticle-5', 'assets/coffe_cup.png');
     this.load.image('obsticle-6', 'assets/coffe_cup.png');
 
-    this.load.image('gameover', 'assets/gameover.png');
+    this.load.image('gameover', 'assets/game_over_seal.png');
 
     this.load.image('background', 'assets/background.jpg');
 
@@ -69,17 +68,17 @@ class GameEnd extends Phaser.Scene {
     console.log("this.score:" + this.score)
 
     this.gameOverScreen = this.add.container(width / 2, height / 2 - 50).setAlpha(1);
-    this.gameOverText = this.add.image(0, 0, 'gameover').setScale(0.25).setOrigin(0.5);
+    this.gameOverText = this.add.image(0, 0, 'gameover').setScale(1).setOrigin(0.5);
 
     this.highscore = Math.max(this.score, this.highscore)
 
     const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
 
 
-    this.highScoreText = this.add.text(screenCenterX, 350, 'High Score: ' + this.highscore, { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(0.5);
-    this.scoreText = this.add.text(screenCenterX, 400, 'Score: ' + this.score, { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(0.5);
+    this.highScoreText = this.add.text(screenCenterX, 400, 'High Score: ' + this.highscore, { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(0.5);
+    this.scoreText = this.add.text(screenCenterX, 450, 'Score: ' + this.score, { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(0.5);
 
-    this.restart = this.add.image(0, 80, 'restart').setInteractive();
+    this.restart = this.add.image(0, 130, 'restart').setInteractive();
     this.gameOverScreen.add([this.gameOverText, this.restart]);
 
 
