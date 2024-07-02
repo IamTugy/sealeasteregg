@@ -84,8 +84,9 @@ class PlayScene extends Phaser.Scene {
     // setBodySize(44, 92)
     this.dino.setScale(0.35);
 
-    this.scoreText = this.add.text(width, 0, '00000', { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(1, 0).setAlpha(0);
-    this.highScoreText = this.add.text(0, 0, '00000', { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(1, 0).setAlpha(0);
+    const screenTopLeftX = this.cameras.main.worldView.x + this.cameras.main.width - 90;
+    const screenTopLeftY = 35;
+    this.scoreText = this.add.text(screenTopLeftX, screenTopLeftY, 'Score: ' + this.score, { fill: '#535353', font: '900 35px Courier', resolution: 5 }).setOrigin(0.5);
 
     backgroundTile = this.add.tileSprite(640, 300, 1280, 600, 'background').setScale(1).setDepth(-1);
     // background.setScrollFactor(20, 1);
@@ -173,7 +174,6 @@ class PlayScene extends Phaser.Scene {
               this.ground.width = width;
               this.isGameRunning = true;
               this.dino.setVelocityX(0);
-              this.scoreText.setAlpha(0); // remove cloud
               startEvent.remove();
             }
           },
@@ -231,7 +231,7 @@ class PlayScene extends Phaser.Scene {
           score.unshift(0);
         }
 
-        this.scoreText.setText(score.join(''));
+        this.scoreText.setText(this.score);
       },
     });
   }
